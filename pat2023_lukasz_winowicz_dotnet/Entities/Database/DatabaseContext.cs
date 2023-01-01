@@ -39,6 +39,70 @@ namespace pat2023_lukasz_winowicz_dotnet.Entities.Database
             modelBuilder.Entity<Book>().Property(i => i.ISBN).HasMaxLength(13).IsRequired();
             modelBuilder.Entity<Book>().Property(p => p.PublicationDate).HasColumnType("datetime2").HasPrecision(0).IsRequired();
 
+            // Data Seeding
+            modelBuilder.Entity<Author>().HasData(
+                            new Author
+                            {
+                                Id = 1,
+                                FirstName = "Haruki",
+                                LastName = "Murakami",
+                                BirthDate = new DateTime(1949, 1, 12),
+                                Gender = false
+                            },
+                            new Author
+                            {
+                                Id = 2,
+                                FirstName = "J.R.R.",
+                                LastName = "Tolkien",
+                                BirthDate = new DateTime(1892, 1, 3),
+                                Gender = false
+                            });
+
+            modelBuilder.Entity<Book>().HasData(
+                new Book
+                {
+                    Id = 1,
+                    Title = "1Q84 Tom 1",
+                    Description = "In 1Q84 ...",
+                    Rating = Convert.ToDecimal(8.2),
+                    ISBN = "XXX123",
+                    PublicationDate = new DateTime(1988, 1, 12),
+                },
+                new Book
+                {
+                    Id = 2,
+                    Title = "1Q84 Tom 2",
+                    Description = "In 1Q84 ...",
+                    Rating = Convert.ToDecimal(7.5),
+                    ISBN = "XXX124",
+                    PublicationDate = new DateTime(1989, 1, 12),
+                },
+                new Book
+                {
+                    Id = 3,
+                    Title = "Hobbit",
+                    Description = "Bilbo was...",
+                    Rating = Convert.ToDecimal(9.5),
+                    ISBN = "XXX125",
+                    PublicationDate = new DateTime(1925, 11, 12),
+                });
+
+            modelBuilder.Entity<BookAuthor>().HasData(
+                new BookAuthor
+                {
+                    AuthorId = 1,
+                    BookId = 1
+                },
+                new BookAuthor
+                {
+                    AuthorId = 1,
+                    BookId = 2
+                },
+                new BookAuthor
+                {
+                    AuthorId = 2,
+                    BookId = 3
+                });
         }
     }
 }
