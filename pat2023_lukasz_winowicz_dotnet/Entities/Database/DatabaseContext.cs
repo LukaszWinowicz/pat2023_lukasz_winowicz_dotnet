@@ -16,7 +16,7 @@ namespace pat2023_lukasz_winowicz_dotnet.Entities.Database
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseSqlServer("server=localhost;database=BookDb;trsted_connection=true");
+            optionsBuilder.UseSqlServer("server=localhost;database=BookDb;trusted_connection=true;TrustServerCertificate=True");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
