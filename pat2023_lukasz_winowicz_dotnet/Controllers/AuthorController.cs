@@ -28,5 +28,20 @@ namespace pat2023_lukasz_winowicz_dotnet.Controllers
             var authorsDto = _mapper.Map<List<AuthorDto>>(authors);
             return authorsDto;
         }
+
+        [HttpPost]
+        public ActionResult Create([FromBody] CreateAuthorDto dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var author = _mapper.Map<Author>(dto);
+            _databaseContext.Authors.Add(author);
+            _databaseContext.SaveChanges();
+
+            return Created($"/api/authors/{author.Id}", null);
+        }
     }
 }

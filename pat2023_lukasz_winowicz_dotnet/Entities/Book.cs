@@ -1,6 +1,6 @@
 ﻿namespace pat2023_lukasz_winowicz_dotnet.Entities
 {
-    public class BookDto
+    public class Book
     {
         public int Id { get; set; }
         public string Title { get; set; }
