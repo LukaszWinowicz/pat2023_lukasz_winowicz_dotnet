@@ -6,13 +6,6 @@ using pat2023_lukasz_winowicz_dotnet.Entities.Database;
 
 namespace pat2023_lukasz_winowicz_dotnet.Services
 {
-    public interface IBookService
-    {
-        IEnumerable<BookDto> GetAll();
-        int Create(CreateBookDto dto);
-        bool Delete(int id);
-        bool Update(int id, UpdateBookDto dto);
-    }
 
     public class BookService : IBookService
     {

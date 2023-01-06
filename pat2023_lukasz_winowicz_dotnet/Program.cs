@@ -1,4 +1,5 @@
 using pat2023_lukasz_winowicz_dotnet.Entities.Database;
+using pat2023_lukasz_winowicz_dotnet.Interfaces;
 using pat2023_lukasz_winowicz_dotnet.Services;
 
 var builder = WebApplication.CreateBuilder(args);
