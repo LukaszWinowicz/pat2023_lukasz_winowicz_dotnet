@@ -38,7 +38,7 @@ namespace pat2023_lukasz_winowicz_dotnet.Controllers
 
         [HttpPut("{id}")]
         public ActionResult Update([FromBody] UpdateBookDto dto, [FromRoute] int id)
-        { 
+        {
         }
     }
 }
