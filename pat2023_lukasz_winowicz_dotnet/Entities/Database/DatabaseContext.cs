@@ -5,7 +5,7 @@ namespace pat2023_lukasz_winowicz_dotnet.Entities.Database
     public class DatabaseContext : DbContext
     {
 
-        public DbSet<BookDto> Books{ get; set; }
+        public DbSet<Book> Books{ get; set; }
         public DbSet<Author> Authors { get; set; }
         public DbSet<BookAuthor> BookAuthors{ get; set; }
 
