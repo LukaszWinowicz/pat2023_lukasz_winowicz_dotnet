@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using pat2023_lukasz_winowicz_dotnet.Dto;
 using pat2023_lukasz_winowicz_dotnet.Entities;
 using pat2023_lukasz_winowicz_dotnet.Entities.Database;
+using pat2023_lukasz_winowicz_dotnet.Interfaces;
 
 namespace pat2023_lukasz_winowicz_dotnet.Controllers
 {
@@ -12,36 +13,41 @@ namespace pat2023_lukasz_winowicz_dotnet.Controllers
     [ApiController]
     public class AuthorController : ControllerBase
     {
-        private readonly DatabaseContext _databaseContext;
-        private readonly IMapper _mapper;
+        private readonly IAuthorService _authorService;
 
-        public AuthorController(DatabaseContext databaseContext, IMapper mapper)
+        public AuthorController(IAuthorService authorService)
         {
-            _databaseContext = databaseContext;
-            _mapper = mapper;
+            _authorService = authorService;
         }
 
-        [HttpGet]
-        public ActionResult<IEnumerable<AuthorDto>> GetAll()
-        {
-            var authors = _databaseContext.Authors.ToList();
-            var authorsDto = _mapper.Map<List<AuthorDto>>(authors);
-            return authorsDto;
-        }
-
-        [HttpPost]
-        public ActionResult Create([FromBody] CreateAuthorDto dto)
-        {
-            if (!ModelState.IsValid)
+        #region HttpGet
+            [HttpGet] // /api/authors
+            public ActionResult<IEnumerable<AuthorDto>> GetAll()
             {
-                return BadRequest(ModelState);
+                var authorsDto = _authorService.GetAll();
+
+                if (authorsDto.Count() == 0)
+                {
+                    return NotFound();
+                }
+
+                return Ok(authorsDto);
             }
+        #endregion
 
-            var author = _mapper.Map<Author>(dto);
-            _databaseContext.Authors.Add(author);
-            _databaseContext.SaveChanges();
+        #region HttpPost
+            [HttpPost] // /api/authors/ + body in JSON
+            public ActionResult Create([FromBody] CreateAuthorDto dto)
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
 
-            return Created($"/api/authors/{author.Id}", null);
-        }
+                var id = _authorService.Create(dto);
+
+                return Created($"/api/authors/{id}", null);
+            }
+        #endregion
     }
 }
