@@ -6,6 +6,7 @@ namespace pat2023_lukasz_winowicz_dotnet.Dto
 {
     public class CreateBookDto
     {
+
         [Required]
         [MaxLength(100)]
         public string Title { get; set; }

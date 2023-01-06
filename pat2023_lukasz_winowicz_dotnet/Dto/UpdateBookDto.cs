@@ -27,4 +27,3 @@ namespace pat2023_lukasz_winowicz_dotnet.Dto
         public DateTime PublicationDate { get; set; }
     }
 }
-}

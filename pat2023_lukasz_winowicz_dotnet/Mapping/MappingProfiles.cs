@@ -11,6 +11,8 @@ namespace pat2023_lukasz_winowicz_dotnet.Mapping
             CreateMap<Author, AuthorDto>();
 
             CreateMap<CreateAuthorDto, Author>();
+
+            CreateMap<CreateBookDto, Book>();
         }
     }
 }
