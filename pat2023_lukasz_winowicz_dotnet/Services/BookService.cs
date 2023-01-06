@@ -14,22 +14,20 @@ namespace pat2023_lukasz_winowicz_dotnet.Services
         bool Update(int id, UpdateBookDto dto);
     }
 
-
-
     public class BookService : IBookService
     {
-        private readonly DatabaseContext _bookShopDbContext;
+        private readonly DatabaseContext _databaseContext;
         private readonly IMapper _mapper;
 
-        public BookService(DatabaseContext bookShopDbContext, IMapper mapper)
+        public BookService(DatabaseContext databaseContext, IMapper mapper)
         {
-            _bookShopDbContext = bookShopDbContext;
+            _databaseContext = databaseContext;
             _mapper = mapper;
         }
 
         public IEnumerable<BookDto> GetAll()
         {
-            var books = _bookShopDbContext.Books.ToList();
+            var books = _databaseContext.Books.ToList();
             var booksDto = _mapper.Map<List<BookDto>>(books);
             return booksDto;
         }
@@ -37,27 +35,27 @@ namespace pat2023_lukasz_winowicz_dotnet.Services
         public int Create(CreateBookDto dto)
         {
             var book = _mapper.Map<Book>(dto);
-            _bookShopDbContext.Books.Add(book);
-            _bookShopDbContext.SaveChanges();
+            _databaseContext.Books.Add(book);
+            _databaseContext.SaveChanges();
             return book.Id;
         }
 
         public bool Delete(int id)
         {
-            var book = _bookShopDbContext
+            var book = _databaseContext
                 .Books
                 .FirstOrDefault(b => b.Id == id);
 
             if (book is null) return false;
 
-            _bookShopDbContext.Books.Remove(book);
-            _bookShopDbContext.SaveChanges();
+            _databaseContext.Books.Remove(book);
+            _databaseContext.SaveChanges();
             return true;
         }
 
         public bool Update(int id, UpdateBookDto dto)
         {
-            var book = _bookShopDbContext
+            var book = _databaseContext
                 .Books
                 .FirstOrDefault(b => b.Id == id);
 
@@ -70,7 +68,7 @@ namespace pat2023_lukasz_winowicz_dotnet.Services
             book.ISBN = dto.ISBN;
             book.PublicationDate = dto.PublicationDate;
 
-            _bookShopDbContext.SaveChanges();
+            _databaseContext.SaveChanges();
             return true;
         }
     }
