@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using pat2023_lukasz_winowicz_dotnet.Dto;
 using pat2023_lukasz_winowicz_dotnet.Entities;
 using pat2023_lukasz_winowicz_dotnet.Entities.Database;
+using pat2023_lukasz_winowicz_dotnet.Services;
 using System.Net;
 
 namespace pat2023_lukasz_winowicz_dotnet.Controllers
@@ -12,54 +13,74 @@ namespace pat2023_lukasz_winowicz_dotnet.Controllers
     [ApiController]
     public class BookController : ControllerBase
     {
-        private readonly DatabaseContext _databaseContext;
-        private readonly IMapper _mapper;
+        private readonly IBookService _bookService;
 
-        public BookController(DatabaseContext databaseContext, IMapper mapper)
+        public BookController(IBookService bookService)
         {
-            _databaseContext = databaseContext;
-            _mapper = mapper;
+            _bookService = bookService;
         }
 
-        [HttpGet]
-        public ActionResult<IEnumerable<BookDto>> GetAll()
-        {
-            var books = _databaseContext.Books.ToList();
-            var booksDto = _mapper.Map<List<BookDto>>(books);
-            return booksDto;
-        }
+        #region HttpGet
+            [HttpGet] // /api/books
+            public ActionResult<IEnumerable<BookDto>> GetAll()
+            {
+                var booksDto = _bookService.GetAll();
+                if (booksDto.Count() == 0)
+                {
+                    return NotFound();
+                }
 
-        [HttpPost]
-        public ActionResult Create([FromBody] CreateBookDto dto)
-        {
-            var book = _mapper.Map<Book>(dto);
-            _databaseContext.Books.Add(book);
-            _databaseContext.SaveChanges();
-            return Created($"/api/books/{book.Id}", null);
-        }
+                return Ok(booksDto);
+            }
+        #endregion
 
-        [HttpDelete("{id}")]
-        public ActionResult Delete([FromRoute] int id)
-        { 
-            var book = _databaseContext.Books.FirstOrDefault(x => x.Id == id);
-            _databaseContext.Books.Remove(book);
-            _databaseContext.SaveChanges();
-            return NotFound();
+        #region HttpPost
+            [HttpPost] // /api/books/ + body in JSON
+            public ActionResult Create([FromBody] CreateBookDto dto)
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
 
-        }
+                var id = _bookService.Create(dto);
 
-        [HttpPut("{id}")]
-        public ActionResult Update([FromBody] UpdateBookDto dto, [FromRoute] int id)
-        {
-        var book = _databaseContext.Books.FirstOrDefault(x =>x.Id == id);
+                return Created($"/api/books/{id}", null);
+            }
+        #endregion
 
-            book.Title = dto.Title;
-            book.Description = dto.Description;
-            book.Rating = dto.Rating;
-            book.ISBN = dto.ISBN;
-            book.PublicationDate = dto.PublicationDate;
-            _databaseContext.SaveChanges();
-            return Ok();
-        }
+        #region HttpDelete
+            [HttpDelete("{id}")] // /api/books/{id}
+            public ActionResult Delete([FromRoute] int id)
+            {
+                var isDeleted = _bookService.Delete(id);
+                if (isDeleted)
+                {
+                    return NoContent();
+                }
+
+                return NotFound();
+            }
+        #endregion
+
+        #region HttpPut
+            [HttpPut("{id}")] // /api/books/{id} + body in JSON
+            public ActionResult Update([FromBody] UpdateBookDto dto, [FromRoute] int id)
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                var isUpdated = _bookService.Update(id, dto);
+
+                if (!isUpdated)
+                {
+                    return NotFound();
+                }
+
+                return Ok();
+            }
+        #endregion
     }
 }
