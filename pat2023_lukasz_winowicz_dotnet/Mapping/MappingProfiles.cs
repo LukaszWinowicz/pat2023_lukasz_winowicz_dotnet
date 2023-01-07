@@ -8,13 +8,9 @@ namespace pat2023_lukasz_winowicz_dotnet.Mapping
     {
         public MappingProfiles()
         {
-            CreateMap<Author, AuthorDto>();
+            CreateMap<Author, AuthorDto>().ReverseMap();
 
-            CreateMap<Book, BookDto>();
-
-            CreateMap<CreateAuthorDto, Author>();
-
-            CreateMap<CreateBookDto, Book>();
+            CreateMap<Book, BookDto>().ReverseMap();
         }
     }
 }

@@ -6,8 +6,8 @@ namespace pat2023_lukasz_winowicz_dotnet.Interfaces
     public interface IBookService
     {
         IEnumerable<BookDto> GetAll();
-        int Create(CreateBookDto dto);
+        int Create(BookDto dto);
         bool Delete(int id);
-        bool Update(int id, UpdateBookDto dto);
+        bool Update(int id, BookDto dto);
     }
 }

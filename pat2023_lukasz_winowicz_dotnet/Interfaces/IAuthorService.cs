@@ -6,7 +6,7 @@ namespace pat2023_lukasz_winowicz_dotnet.Interfaces
     public interface IAuthorService
     {
         IEnumerable<AuthorDto> GetAll(string search);
-        int Create(CreateAuthorDto dto);
+        int Create(AuthorDto dto);
         IEnumerable<BookDto> GetBooksByAuthor(string LastName);
     }
 }
