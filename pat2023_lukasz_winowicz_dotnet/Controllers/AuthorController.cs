@@ -22,9 +22,9 @@ namespace pat2023_lukasz_winowicz_dotnet.Controllers
 
         #region HttpGet
             [HttpGet] // /api/authors
-            public ActionResult<IEnumerable<AuthorDto>> GetAll()
+            public ActionResult<IEnumerable<AuthorDto>> GetAll([FromQuery] string searchAuthor)
             {
-                var authorsDto = _authorService.GetAll();
+                var authorsDto = _authorService.GetAll(searchAuthor);
 
                 if (authorsDto.Count() == 0)
                 {
