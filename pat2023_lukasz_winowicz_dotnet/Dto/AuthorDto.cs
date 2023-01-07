@@ -3,13 +3,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 
 namespace pat2023_lukasz_winowicz_dotnet.Dto
 {
     public class AuthorDto
     {
-        [ForeignKey("id")]
-        public int Id { get; set; }
+        public int Id { get; protected set; }
 
         [Required]
         [MaxLength(50)]

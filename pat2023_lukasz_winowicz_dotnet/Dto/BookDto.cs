@@ -6,7 +6,7 @@ namespace pat2023_lukasz_winowicz_dotnet.Entities
 {
     public class BookDto
     {
-        public int Id { get; set; }
+        public int Id { get; protected set; }
         
         [Required]
         [MaxLength(100)]
