@@ -4,7 +4,7 @@
     {
         public int BookId { get; set; }
         public int AuthorId { get; set; }
-        public BookDto Book { get; set; }
+        public Book Book { get; set; }
         public Author Author { get; set; }
     }
 }
