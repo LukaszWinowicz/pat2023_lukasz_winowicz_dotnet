@@ -21,7 +21,7 @@ namespace pat2023_lukasz_winowicz_dotnet.Controllers
         }
 
         #region HttpGet - GetAll
-        [HttpGet]
+        [HttpGet] // /api/authors?search=Tolkien
         public ActionResult<IEnumerable<AuthorDto>> GetAll([FromQuery] string search)
             {
                 var authorsDto = _authorService.GetAll(search);
