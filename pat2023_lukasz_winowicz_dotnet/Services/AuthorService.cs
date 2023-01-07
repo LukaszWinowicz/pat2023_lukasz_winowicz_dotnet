@@ -2,6 +2,7 @@
 using pat2023_lukasz_winowicz_dotnet.Dto;
 using pat2023_lukasz_winowicz_dotnet.Entities;
 using pat2023_lukasz_winowicz_dotnet.Entities.Database;
+using pat2023_lukasz_winowicz_dotnet.Interfaces;
 
 namespace pat2023_lukasz_winowicz_dotnet.Services
 {
@@ -17,9 +18,9 @@ namespace pat2023_lukasz_winowicz_dotnet.Services
             _mapper = mapper;
         }
 
-        public IEnumerable<AuthorDto> GetAll()
+        public IEnumerable<AuthorDto> GetAll(string search)
         {
-            var authors = _databaseContext.Authors.ToList();
+            var authors = _databaseContext.Authors.Where(x => search == null || (x.LastName.ToLower().Contains(search))).ToList();
             var authorsDto = _mapper.Map<List<AuthorDto>>(authors);
             return authorsDto;
         }

@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
 using pat2023_lukasz_winowicz_dotnet.Dto;
 using pat2023_lukasz_winowicz_dotnet.Entities;
 using pat2023_lukasz_winowicz_dotnet.Entities.Database;
+using pat2023_lukasz_winowicz_dotnet.Interfaces;
 
 namespace pat2023_lukasz_winowicz_dotnet.Services
 {
