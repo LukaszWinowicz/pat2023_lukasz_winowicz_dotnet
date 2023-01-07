@@ -20,11 +20,11 @@ namespace pat2023_lukasz_winowicz_dotnet.Controllers
             _authorService = authorService;
         }
 
-        #region HttpGet
-            [HttpGet] // /api/authors
-            public ActionResult<IEnumerable<AuthorDto>> GetAll([FromQuery] string searchAuthor)
+        #region HttpGet - GetAll
+        [HttpGet]
+        public ActionResult<IEnumerable<AuthorDto>> GetAll([FromQuery] string search)
             {
-                var authorsDto = _authorService.GetAll(searchAuthor);
+                var authorsDto = _authorService.GetAll(search);
 
                 if (authorsDto.Count() == 0)
                 {
@@ -36,17 +36,32 @@ namespace pat2023_lukasz_winowicz_dotnet.Controllers
         #endregion
 
         #region HttpPost
-            [HttpPost] // /api/authors/ + body in JSON
-            public ActionResult Create([FromBody] CreateAuthorDto dto)
+        [HttpPost] // /api/authors/ + body in JSON
+        public ActionResult Create([FromBody] CreateAuthorDto dto)
+        {
+            if (!ModelState.IsValid)
             {
-                if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            }
+
+            var id = _authorService.Create(dto);
+
+            return Created($"/api/authors/{id}", null);
+        }
+        #endregion
+
+        #region HttpGet - GetBooksByAuthor
+            [HttpGet("{searchBooks}")] // /api/authors/searchBooks?LastName=Tolkien
+            public ActionResult<IEnumerable<BookDto>> GetBooksByAuthor([FromQuery] string LastName)
+            {
+                var booksDto = _authorService.GetBooksByAuthor(LastName);
+
+                if (booksDto.Count() == 0)
                 {
-                    return BadRequest(ModelState);
+                    return NotFound();
                 }
 
-                var id = _authorService.Create(dto);
-
-                return Created($"/api/authors/{id}", null);
+                return Ok(booksDto);
             }
         #endregion
     }
