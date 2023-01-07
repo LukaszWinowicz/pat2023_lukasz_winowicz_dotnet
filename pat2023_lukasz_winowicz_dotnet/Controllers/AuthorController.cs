@@ -10,7 +10,7 @@ using pat2023_lukasz_winowicz_dotnet.Interfaces;
 namespace pat2023_lukasz_winowicz_dotnet.Controllers
 {
     [Route("api/authors")]
-    //[ApiController]
+    [ApiController]
     public class AuthorController : ControllerBase
     {
         private readonly IAuthorService _authorService;
@@ -22,9 +22,9 @@ namespace pat2023_lukasz_winowicz_dotnet.Controllers
 
         #region HttpGet
             [HttpGet] // /api/authors
-            public ActionResult<IEnumerable<AuthorDto>> GetAll([FromQuery] string search)
+            public ActionResult<IEnumerable<AuthorDto>> GetAll([FromQuery] string searchAuthor)
             {
-                var authorsDto = _authorService.GetAll(search);
+                var authorsDto = _authorService.GetAll(searchAuthor);
 
                 if (authorsDto.Count() == 0)
                 {

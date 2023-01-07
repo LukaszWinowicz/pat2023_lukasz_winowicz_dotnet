@@ -18,9 +18,9 @@ namespace pat2023_lukasz_winowicz_dotnet.Services
             _mapper = mapper;
         }
 
-        public IEnumerable<AuthorDto> GetAll(string search)
+        public IEnumerable<AuthorDto> GetAll(string searchAuthor)
         {
-            var authors = _databaseContext.Authors.Where(x => search == null || (x.LastName.ToLower().Contains(search))).ToList();
+            var authors = _databaseContext.Authors.Where(x => searchAuthor == null || (x.LastName.ToLower().Contains(searchAuthor))).ToList();
             var authorsDto = _mapper.Map<List<AuthorDto>>(authors);
             return authorsDto;
         }
