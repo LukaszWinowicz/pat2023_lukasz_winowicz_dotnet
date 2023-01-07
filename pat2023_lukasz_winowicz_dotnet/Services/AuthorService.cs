@@ -24,7 +24,7 @@ namespace pat2023_lukasz_winowicz_dotnet.Services
             var authorsDto = _mapper.Map<List<AuthorDto>>(authors);
             return authorsDto;
         }
-        public int Create(CreateAuthorDto dto)
+        public int Create(AuthorDto dto)
         {
             var author = _mapper.Map<Author>(dto);
             _databaseContext.Authors.Add(author);

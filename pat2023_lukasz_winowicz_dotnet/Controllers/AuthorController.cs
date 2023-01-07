@@ -36,18 +36,18 @@ namespace pat2023_lukasz_winowicz_dotnet.Controllers
         #endregion
 
         #region HttpPost
-        [HttpPost] // /api/authors/ + body in JSON
-        public ActionResult Create([FromBody] CreateAuthorDto dto)
-        {
-            if (!ModelState.IsValid)
+            [HttpPost] // /api/authors/ + body in JSON
+            public ActionResult Create([FromBody] AuthorDto dto)
             {
-                return BadRequest(ModelState);
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                var id = _authorService.Create(dto);
+
+                return Created($"/api/authors/{id}", null);
             }
-
-            var id = _authorService.Create(dto);
-
-            return Created($"/api/authors/{id}", null);
-        }
         #endregion
 
         #region HttpGet - GetBooksByAuthor

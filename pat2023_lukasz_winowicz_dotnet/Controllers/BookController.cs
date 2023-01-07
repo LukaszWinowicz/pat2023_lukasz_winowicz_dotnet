@@ -36,7 +36,7 @@ namespace pat2023_lukasz_winowicz_dotnet.Controllers
 
         #region HttpPost
             [HttpPost] // /api/books/ + body in JSON
-            public ActionResult Create([FromBody] CreateBookDto dto)
+            public ActionResult Create([FromBody] BookDto dto)
             {
                 if (!ModelState.IsValid)
                 {
@@ -65,7 +65,7 @@ namespace pat2023_lukasz_winowicz_dotnet.Controllers
 
         #region HttpPut
             [HttpPut("{id}")] // /api/books/{id} + body in JSON
-            public ActionResult Update([FromBody] UpdateBookDto dto, [FromRoute] int id)
+            public ActionResult Update([FromBody] BookDto dto, [FromRoute] int id)
             {
                 if (!ModelState.IsValid)
                 {

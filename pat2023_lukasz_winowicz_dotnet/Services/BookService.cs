@@ -25,7 +25,7 @@ namespace pat2023_lukasz_winowicz_dotnet.Services
             return booksDto;
         }
 
-        public int Create(CreateBookDto dto)
+        public int Create(BookDto dto)
         {
             var book = _mapper.Map<Book>(dto);
             _databaseContext.Books.Add(book);
@@ -46,7 +46,7 @@ namespace pat2023_lukasz_winowicz_dotnet.Services
             return true;
         }
 
-        public bool Update(int id, UpdateBookDto dto)
+        public bool Update(int id, BookDto dto)
         {
             var book = _databaseContext
                 .Books
