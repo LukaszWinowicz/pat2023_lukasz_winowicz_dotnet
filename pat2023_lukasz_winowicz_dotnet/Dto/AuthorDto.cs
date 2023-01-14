@@ -23,7 +23,7 @@ namespace pat2023_lukasz_winowicz_dotnet.Dto
         [Column(TypeName = "datetime2(0)")]
         public DateTime BirthDate { get; set; }
 
-        [Required]
+        [Required] // false = man, true = woman
         public bool Gender { get; set; }
 
     }

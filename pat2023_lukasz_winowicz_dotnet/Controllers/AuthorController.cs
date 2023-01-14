@@ -21,10 +21,10 @@ namespace pat2023_lukasz_winowicz_dotnet.Controllers
         }
 
         #region HttpGet - GetAll
-        [HttpGet] // /api/authors?search=Tolkien
-        public ActionResult<IEnumerable<AuthorDto>> GetAll([FromQuery] string search)
+            [HttpGet] // /api/authors?lastName=Tolkien
+            public ActionResult<IEnumerable<AuthorDto>> GetAll([FromQuery] string lastName)
             {
-                var authorsDto = _authorService.GetAll(search);
+                var authorsDto = _authorService.GetAll(lastName);
 
                 if (authorsDto.Count() == 0)
                 {
@@ -51,10 +51,10 @@ namespace pat2023_lukasz_winowicz_dotnet.Controllers
         #endregion
 
         #region HttpGet - GetBooksByAuthor
-            [HttpGet("{searchBooks}")] // /api/authors/searchBooks?LastName=Tolkien
-            public ActionResult<IEnumerable<BookDto>> GetBooksByAuthor([FromQuery] string LastName)
+            [HttpGet("books")] // /api/authors/books?LastName=Tolkien
+            public ActionResult<IEnumerable<BookDto>> GetBooksByAuthor([FromQuery] string lastName)
             {
-                var booksDto = _authorService.GetBooksByAuthor(LastName);
+                var booksDto = _authorService.GetBooksByAuthor(lastName);
 
                 if (booksDto.Count() == 0)
                 {
@@ -64,5 +64,23 @@ namespace pat2023_lukasz_winowicz_dotnet.Controllers
                 return Ok(booksDto);
             }
         #endregion
+
+        #region HttpGet - GetBooksByAuthorId
+        [Route("{authorId:int}/books")] // /api/authors/2/books
+            public ActionResult<IEnumerable<BookDto>> GetBooksByAuthorId(int authorId)
+            {
+
+                var booksDto = _authorService.GetBooksByAuthorId(authorId);
+
+                if (booksDto.Count() == 0)
+                {
+                    return NotFound();
+                }
+
+                return Ok(booksDto);
+            }
+        #endregion
+
+       
     }
 }

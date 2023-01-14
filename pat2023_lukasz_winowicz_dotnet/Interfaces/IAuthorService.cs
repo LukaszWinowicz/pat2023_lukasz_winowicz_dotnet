@@ -8,5 +8,6 @@ namespace pat2023_lukasz_winowicz_dotnet.Interfaces
         IEnumerable<AuthorDto> GetAll(string search);
         int Create(AuthorDto dto);
         IEnumerable<BookDto> GetBooksByAuthor(string LastName);
+        IEnumerable<BookDto> GetBooksByAuthorId(int authorId);
     }
 }
